@@ -23,15 +23,14 @@ class Player {
     currentBlock = b;
   }
 
-
-  boolean isAtDoor() {
-    if (currentBlock.name == "door") 
+  boolean isAtYellow() {
+    if (currentBlock.name == "yellow") 
       return true;
     return false;
   }
-  
-  boolean isAtYellow() {
-    if (currentBlock.name == "yellow") 
+
+  boolean isAtDoor() {
+    if (currentBlock.name == "door") 
       return true;
     return false;
   }
