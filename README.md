@@ -1,2 +1,2 @@
-# MIRAGE2
+# MIRAGE
 PureDigital Version
