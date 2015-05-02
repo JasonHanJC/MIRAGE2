@@ -5,14 +5,6 @@ import gifAnimation.*;
 int savedTime;
 int gameState;
 
-
-//for move effect
-float exponent = 2;   // Determines the curve
-float x = 0.0;        // Current x-coordinate
-float y = 0.0;        // Current y-coordinate
-float step = 0.01;    // Size of each step along the path
-float pct = 0.0;      // Percentage traveled (0.0 to 1.0)
-
 float beginAx;
 float beginAy;
 float beginBx;
@@ -35,8 +27,8 @@ int diceSize;
 int steps;
 
 //up 0 down 1 left 2 right 3
-int directionA;
-int directionB;
+//int directionA;
+//int directionB;
 
 //store you steps
 int[] last2StepA;
@@ -57,23 +49,24 @@ int tempDtime;
 
 boolean stopMove;
 
+//1: scenario 1   2: scenario 2   3: scenario 3  4: game
+int blockInitial = 0;
+int scenarioDice = 0;
+int S2wrongTime = 0;
+
 
 Player playerA;
 Player playerB;
 
 void setup() {
-  size(800, 800);
+  size(1440, 900);
   frameRate(60);
 
-  initialBlock();
   initialInterface();
 
-  imageMode(CENTER);
-  //initial players
-  playerA = new Player("A", true, 0, b10);
-  playerB = new Player("B", false, 0, b9);
+  background(0);
 
-  //savedTime = millis();
+  imageMode(CENTER);
 
   playerAChoose = true;
   playerBChoose = false;
@@ -98,12 +91,19 @@ void setup() {
   stopMove = false;
   diceSize = 200;
 
+
+  blockInitial = 1;
+  initialBlock();
+
+  playerA = new Player("A", false, 3, b7);
+  playerB = new Player("B", true, 2, b0);
   last2StepA = new int[] {
-    10, 10
+    7, 7
   };
   last2StepB = new int[] {
-    9, 9
+    0, 0
   };
+
 
   gameState = 0;
 }
@@ -113,17 +113,19 @@ void movieEvent(Movie m) {
 }
 
 void draw() { 
+  println("A : " + last2StepA[0] + " " + last2StepA[1] + "  B : " + last2StepB[0] + " " + last2StepB[1]);
   //int passedTime = millis() - savedTime;
   /******************    State 0 Intro    ******************/
   if (gameState == 0) {                        //startvideo
     title.play();
-    image(title, width/2, height/2, width, height);
+    image(title, width/2, height/2, 900, 900);
     if (title.time() == title.duration()) {
-      intro1.play();
-      image(intro1, width/2, height/2, width, height);
+      scenario1.play();
+      image(scenario1, width/2, height/2, width, height);
     }
-    if (intro1.time() == intro1.duration()) {
-      gameState = 1;
+    if (scenario1.time() == scenario1.duration()) {
+      gameState = 4;  //go to scenario 1
+      println("In scenario 1");
     }
   }
 
@@ -132,82 +134,60 @@ void draw() {
     image(toWin, width/2, height/2, width, height);
 
     if (toWin.time() == toWin.duration()) {
-      image(choosed, width/2, height/2, width, height);
 
       if (playerAChoose == true) {
-        textSize(20);
-        fill(237, 30, 40);
-        text("Red Player Choose Please", 300, 700);
+
+        image(chooseR, width/2, height/2, width, height);
+        image(chooseSpinR, width/4*3, height/2-20, 230, 360);
+        chooseSpinR.play();
         if (playerADimen != 0) {
-          textSize(20);
-          fill(255, 0, 0);
-          text(playerADimen + "D", width/2, 730);
           if (playerADimen == 2) {
-            fill(255, 0, 0, 80);
-            strokeWeight(0);
-            beginShape();
-            vertex(70, 204);
-            vertex(463, 204);
-            vertex(333, 613);
-            vertex(70, 613);
-            vertex(70, 204);
-            endShape();
+            image(dlogo_a2d, width/4*3, height/2-100, 71*0.5, 92*0.5);
           } else if (playerADimen == 3) {
-            fill(255, 0, 0, 70);
-            strokeWeight(0);
-            beginShape();
-            vertex(463, 204);
-            vertex(730, 204);
-            vertex(730, 613);
-            vertex(333, 613);
-            vertex(463, 204);
-            endShape();
+            image(dlogo_a3d, width/4*3, height/2-100, 79*0.5, 92*0.5);
+          }
+        }
+        if (playerBDimen != 0) {
+          if (playerBDimen == 2) {
+            image(dlogo_b2d, width/4, height/2-100, 71*0.5, 92*0.5);
+          } else if (playerBDimen == 3) {
+            image(dlogo_b3d, width/4, height/2-100, 79*0.5, 92*0.5);
           }
         }
       }
 
       if (playerBChoose == true) {
-        textSize(20);
-        fill(49, 187, 244);
-        text("Blue Player Choose Please", 290, 700);
+        image(chooseY, width/2, height/2, width, height);
+        image(chooseSpinY, width/4, height/2-20, 230, 360);
+        chooseSpinY.play();
         if (playerBDimen != 0) {
-          textSize(20);
-          fill(49, 187, 244);
-          text(playerBDimen + "D", width/2, 730);
           if (playerBDimen == 2) {
-            fill(42, 171, 266, 80);
-            strokeWeight(0);
-            beginShape();
-            vertex(70, 204);
-            vertex(463, 204);
-            vertex(333, 613);
-            vertex(70, 613);
-            vertex(70, 204);
-            endShape();
+            image(dlogo_b2d, width/4, height/2-100, 71*0.5, 92*0.5);
           } else if (playerBDimen == 3) {
-            fill(42, 171, 266, 70);
-            strokeWeight(0);
-            beginShape();
-            vertex(463, 204);
-            vertex(730, 204);
-            vertex(730, 613);
-            vertex(333, 613);
-            vertex(463, 204);
-            endShape();
+            image(dlogo_b3d, width/4, height/2-100, 79*0.5, 92*0.5);
+          }
+        }
+        if (playerADimen != 0) {
+          if (playerADimen == 2) {
+            image(dlogo_a2d, width/4*3, height/2-100, 71*0.5, 92*0.5);
+          } else if (playerADimen == 3) {
+            image(dlogo_a3d, width/4*3, height/2-100, 79*0.5, 92*0.5);
           }
         }
       }
       if (wrongInput == true) {
         textSize(20);
         fill(255, 239, 0);
-        text("Error! Please Input 2 or 3", 280, 760);
+        text("Error! Please Input 2 or 3", width/2-100, 790);
       }
 
       playerA.setDimen(playerADimen);
       playerB.setDimen(playerBDimen);
 
-      if (playerA.gameDimen != 0 && playerB.gameDimen != 0 && EnterCount == 2 )
+      if (playerA.gameDimen != 0 && playerB.gameDimen != 0 && EnterCount == 2 ) {
+        //delay(2000);
         gameState = 2;
+      }
     } else {
       toWin.play();
     }
@@ -264,10 +244,75 @@ void draw() {
     last2StepA[1] = 10;
     last2StepB[0] = 9;
     last2StepB[1] = 9;
+    blockInitial = 0;
+    S2wrongTime = 0;
 
     gameState = 0;
   }
+  /******************  State 4 scenario 1  ********************/
+  if (gameState == 4) {
+    //println(playerA.gameDimen +"   "+ playerA.myTurn + " " + playerA.currentBlock.name);
+    //println("In scenario 1");
+    if (playerA.myTurn == true) {
+      //println("PlayerA Move");
+      playerMove(playerA);
+    }
+
+    if (playerB.myTurn == true) {
+      //println("PlayerB Move");
+      playerMove(playerB);
+    }
+
+    if (playerA.currentBlock.name == "final" && playerB.currentBlock.name == "final") {
+      scenario2.play();
+      image(scenario2, width/2, height/2, width, height);
+      if (scenario2.time() == scenario2.duration()) {
+        blockLib.clear();
+        blockInitial = 2;
+        initialBlock();
+        playerA = new Player("A", false, 3, b8);
+        playerB = new Player("B", true, 2, b0);
+        last2StepA[0] = 8;
+        last2StepA[1] = 8;
+        last2StepB[0] = 0;
+        last2StepB[1] = 0;
+        gameState = 5;  //go to scenario 2
+        println("In scenario 2");
+      }
+    }
+  }
+
+  /******************  State 5 scenario 2  ********************/
+  if (gameState == 5) {
+    //println(playerA.gameDimen +"   "+ playerA.myTurn + " " + playerA.currentBlock.name);
+
+    if (playerA.myTurn == true) {
+      //println("PlayerA Move");
+      playerMove(playerA);
+    }
+
+    if (playerB.myTurn == true) {
+      //println("PlayerB Move");
+      playerMove(playerB);
+    }
+
+    if (playerA.currentBlock.name == "final" && playerB.currentBlock.name == "final") {
+      blockLib.clear();
+      blockInitial = 4;
+      initialBlock();
+      playerA = new Player("A", true, 0, b10);
+      playerB = new Player("B", false, 0, b9);
+      last2StepA = new int[] {
+        10, 10
+      };
+      last2StepB = new int[] {
+        9, 9
+      };
+      gameState = 1;  //go to Dimen choose
+    }
+  }
 }
+
 
 
 void changeTurn() {
@@ -276,7 +321,7 @@ void changeTurn() {
     playerB.setMyTurn(true);
     stopMove = false;
     doorChanged = false;
-    if (playerA.currentBlock.name != "door" && playerB.currentBlock.name != "door"){
+    if (playerA.currentBlock.name != "door" && playerB.currentBlock.name != "door") {
       sameDoor = false;
       nowAtDoor = false;
     }
@@ -285,7 +330,7 @@ void changeTurn() {
     playerA.setMyTurn(true);
     stopMove = false;
     doorChanged = false;
-    if (playerA.currentBlock.name != "door" && playerB.currentBlock.name != "door"){
+    if (playerA.currentBlock.name != "door" && playerB.currentBlock.name != "door") {
       sameDoor = false;
       nowAtDoor = false;
     }
@@ -335,11 +380,55 @@ void keyPressed() {
   if (gameState == 2 && key == ' ' && diceThrowed == false) {
     whichDice = int(random(-0.5, 6));
   }
+  if (gameState == 4 && key == ' ') {
+    switch(scenarioDice) {
+    case 0:
+      whichDice = 1;
+      scenarioDice++;
+      break;
+    case 1:
+      whichDice = 2;
+      scenarioDice++;
+      break;
+    case 2:
+      whichDice = 3;
+      scenarioDice = 0;
+      break;
+    }
+  }
+  if (gameState == 5 && key == ' ') {
+    switch(scenarioDice) {
+    case 0:
+      whichDice = 4;
+      scenarioDice++;
+      break;
+    case 1:
+      whichDice = 2;
+      scenarioDice++;
+      break;
+    case 2:
+      whichDice = 4;
+      scenarioDice ++;
+      break;
+    case 3:
+      whichDice = 5;
+      scenarioDice ++;
+      break;
+    case 4:
+      whichDice = 3;
+      scenarioDice ++;
+      break;
+    case 5:
+      whichDice = 3;
+      scenarioDice =0;
+      break;
+    }
+  }
 
   //piece move
-  if (playerA.myTurn == true && gameState == 2) {
+  if (playerA.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5)) {
     pieceMove(playerA);
-  } else if (playerB.myTurn == true && gameState == 2) {
+  } else if (playerB.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5)) {
     pieceMove(playerB);
   }
 
@@ -398,10 +487,41 @@ void keyPressed() {
   }
 }
 
-void mouseClicked() {
-  if (gameState == 0) {
-    title.pause();
-    gameState = 1;
-  }
+//void mouseClicked() {
+//  if (gameState == 0) {
+//    title.pause();
+//    gameState = 4;
+//  }
+//  if (gameState == 4) {
+//    blockLib.clear();
+//    blockInitial = 2;
+//    initialBlock();
+//    playerA = new Player("A", false, 3, b10);
+//    playerB = new Player("B", true, 2, b2);
+//    last2StepA[0] = 10;
+//    last2StepA[1] = 10;
+//    last2StepB[0] = 2;
+//    last2StepB[1] = 2;
+//    gameState = 5;
+//  }
+//  if (gameState == 5) {
+//    blockLib.clear();
+//    blockInitial = 4;
+//    initialBlock();
+//    playerA = new Player("A", true, 0, b10);
+//    playerB = new Player("B", false, 0, b9);
+//    last2StepA = new int[] {
+//      10, 10
+//    };
+//    last2StepB = new int[] {
+//      9, 9
+//    };
+//    gameState = 1;
+//  }
+//}
+
+void delay(int delay) {
+  int time = millis();
+  while (millis () - time <= delay);
 }
 
