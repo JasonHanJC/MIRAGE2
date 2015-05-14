@@ -28,50 +28,6 @@ void playerMove(Player p) {
     }
   }
 
-  //scenario 2 change Dimen, put here because we wanna this video at the top
-  if (p.isAtYellow() == true && gameState == 5 && stopMove == true) {
-
-    if (p.gameDimen == 3 && stopMove == true) {
-      S2R3to2.play();
-      image(S2R3to2, width/2, height/2, width, height);
-      if (S2R3to2.duration() == S2R3to2.time()) {
-        S2R3to2.stop();
-        p.setDimen(2);
-        stopMove = false;
-        p.setMyTurn(false);
-        if (p.name == "A") {
-          playerB.setMyTurn(true);
-          diceThrowed = false;
-          nowAtDoor = false;
-        } else {
-          playerA.setMyTurn(true);
-          diceThrowed = false;
-          nowAtDoor = false;
-        }
-      }
-    }
-
-    if (p.gameDimen == 2 && stopMove == true) {      //2d
-      S2L2to3.play();
-      image(S2L2to3, width/2, height/2, width, height);
-      if (S2L2to3.duration() == S2L2to3.time()) {
-        S2L2to3.stop();
-        p.setDimen(3);
-        stopMove = false;
-        p.setMyTurn(false);
-        if (p.name == "A") {
-          playerB.setMyTurn(true);
-          diceThrowed = false;
-          nowAtDoor = false;
-        } else {
-          playerA.setMyTurn(true);
-          diceThrowed = false;
-          nowAtDoor = false;
-        }
-      }
-    }
-    pieceDisplay();
-  }
 
   /**   throw dice   **/
   if (diceThrowed == false && stopMove == false && mirageChange == false) {
@@ -117,7 +73,57 @@ void playerMove(Player p) {
     image(turnB, width/2, height/2, width, height);
   }
 
-  //////////////////////////////////
+  ////////////////////////////////////scenario 2 change Dimen, put here because we wanna this video at the top
+  if (p.isAtYellow() == true && gameState == 5 && stopMove == true) {
+
+    if (p.gameDimen == 3 && stopMove == true) {
+      S2R3to2.play();
+      image(S2R3to2, width/2, height/2, width, height);
+      if (S2R3to2.duration() == S2R3to2.time()) {
+        S2R3to2.stop();
+        p.setDimen(2);
+        stopMove = false;
+        p.setMyTurn(false);
+        if (p.name == "A") {
+          playerB.setMyTurn(true);
+          diceThrowed = false;
+          nowAtDoor = false;
+        } else {
+          playerA.setMyTurn(true);
+          diceThrowed = false;
+          nowAtDoor = false;
+        }
+      }
+    }
+
+    if (p.gameDimen == 2 && stopMove == true) {      //2d
+      S2L2to3.play();
+      image(S2L2to3, width/2, height/2, width, height);
+      if (S2L2to3.duration() == S2L2to3.time()) {
+        S2L2to3.stop();
+        p.setDimen(3);
+        stopMove = false;
+        p.setMyTurn(false);
+        if (p.name == "A") {
+          playerB.setMyTurn(true);
+          diceThrowed = false;
+          nowAtDoor = false;
+        } else {
+          playerA.setMyTurn(true);
+          diceThrowed = false;
+          nowAtDoor = false;
+        }
+      }
+    }
+    pieceDisplay();
+    if (p.name == "A") {
+      fill(#C1272D);
+      image(turnR, width/2, height/2, width, height);
+    } else {
+      fill(#FFFF00);
+      image(turnB, width/2, height/2, width, height);
+    }
+  }
 
   if (gameState == 2 || gameState == 3) {
     if (p.isAtFinal() == false) {
@@ -150,107 +156,41 @@ void playerMove(Player p) {
   /***************************at final***************************/
   if (p.name == "A") {
     if (p.isAtFinal() == true && steps == 0 && (gameState == 2 || gameState == 3)) {
-      win.play();
-      image(win, width/2, height/2, 800, 800);
-      textFont(oswald);
-      textSize(75);
-      fill(255);
-      text("RED", width/2 - 43, height/2 - 40);
-      if (win.duration() == win.time()) {
-        win.stop();
-        if (gameState == 2) {
-          turnCount = 0;
-          cleanDoorM();
-          System.gc();
-          playerAChoose = true;
-          playerBChoose = false;
-          playerADimen = 0;
-          playerBDimen = 0;
-          wrongInput = false;
-          EnterCount = 0;
-          diceThrowed = false;
-          whichDice = 7;
-          steps = 0;
-          doorTime = 0;
-          tempDtime = 0;
-          doorChooseNo = 0;
-          doorChanged = false;
-          sameDoor = false;
-          nowAtDoor = false;
-          stairErr = false;
-          stopMove = false;
-          blockLib.clear();
-          doorLib.clear();
-          blockInitial = 5;
-          initialBlock();
-          playerA.setDimen(0);
-          playerB.setDimen(0);
-          playerA.setMyTurn(true);
-          playerB.setMyTurn(false);
-          playerA.setCurrentBlock(b18);
-          playerB.setCurrentBlock(b17);
-          numofDoor = 5;
-          last2StepA[0] = 18;
-          last2StepA[1] = 18;
-          last2StepB[0] = 17;
-          last2StepB[1] = 17;
-          doorLockMove = false;
+      if (gameState == 2) {
+        LDRwin.play();     
+        image(LDRwin, width/2, height/2, width, height);
+        if (LDRwin.duration() == LDRwin.time()) {
+          LDRwin.stop();
+          setUpMirage();
           gameState = 6;
-        } else {
-          gameState = 7;
+        }
+      }
+      if (gameState == 3) {
+        LMRwin.play(); 
+        image(LMRwin, width/2, height/2, width, height);    
+        if (LMRwin.duration() == LMRwin.time()) {
+          LMRwin.stop();
+          //gameState = 7;
         }
       }
     }
   } else {
     if (p.isAtFinal() == true && steps == 0 && (gameState == 2 || gameState == 3)) {
-      win.play();
-      image(win, width/2, height/2, 800, 800);
-      textFont(oswald);
-      textSize(75);
-      fill(255);
-      text("YELLOW", width/2 - 43, height/2 - 40);
-      if (win.duration() == win.time()) {
-        win.stop();
-        if (gameState == 2) {
-          turnCount = 0;
-          cleanDoorM();
-          System.gc();
-          playerAChoose = true;
-          playerBChoose = false;
-          playerADimen = 0;
-          playerBDimen = 0;
-          wrongInput = false;
-          EnterCount = 0;
-          diceThrowed = false;
-          whichDice = 7;
-          steps = 0;
-          doorTime = 0;
-          tempDtime = 0;
-          doorChooseNo = 0;
-          doorChanged = false;
-          sameDoor = false;
-          nowAtDoor = false;
-          stairErr = false;
-          stopMove = false;
-          blockLib.clear();
-          doorLib.clear();
-          blockInitial = 5;
-          initialBlock();
-          playerA.setDimen(0);
-          playerB.setDimen(0);
-          playerA.setMyTurn(true);
-          playerB.setMyTurn(false);
-          playerA.setCurrentBlock(b18);
-          playerB.setCurrentBlock(b17);
-          numofDoor = 5;
-          last2StepA[0] = 18;
-          last2StepA[1] = 18;
-          last2StepB[0] = 17;
-          last2StepB[1] = 17;
-          doorLockMove = false;
+      if (gameState == 2) {
+        LDYwin.play();
+        image(LDYwin, width/2, height/2, width, height);
+        if (LDYwin.duration() == LDYwin.time()) {
+          LDYwin.stop();
+          setUpMirage();
           gameState = 6;
-        } else {
-          gameState = 7;
+        }
+      }
+      if (gameState == 3) {
+        LMYwin.play(); 
+        image(LMYwin, width/2, height/2, width, height);    
+        if (LMYwin.duration() == LMYwin.time()) {
+          LMYwin.stop();
+          //gameState = 7;
         }
       }
     }
@@ -282,5 +222,42 @@ void changeTurn() {
       nowAtDoor = false;
     }
   }
+}
+
+void setUpMirage() {
+  turnCount = 0;
+  playerAChoose = true;
+  playerBChoose = false;
+  playerADimen = 0;
+  playerBDimen = 0;
+  wrongInput = false;
+  EnterCount = 0;
+  diceThrowed = false;
+  whichDice = 7;
+  steps = 0;
+  doorTime = 0;
+  tempDtime = 0;
+  doorChooseNo = 0;
+  doorChanged = false;
+  sameDoor = false;
+  nowAtDoor = false;
+  stairErr = false;
+  stopMove = false;
+  blockLib.clear();
+  doorLib.clear();
+  blockInitial = 5;
+  initialBlock();
+  playerA.setDimen(0);
+  playerB.setDimen(0);
+  playerA.setMyTurn(true);
+  playerB.setMyTurn(false);
+  playerA.setCurrentBlock(b18);
+  playerB.setCurrentBlock(b17);
+  numofDoor = 5;
+  last2StepA[0] = 18;
+  last2StepA[1] = 18;
+  last2StepB[0] = 17;
+  last2StepB[1] = 17;
+  doorLockMove = false;
 }
 
