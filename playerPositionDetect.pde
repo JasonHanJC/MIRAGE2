@@ -90,6 +90,7 @@ public void playerPositionDetect(Player p) {
 
     if (p.gameDimen == 2 && tempDtime != doorTime && gameState == 2) { 
       door2D.play();
+      doorLockMove = true;
       image(door2D, width/2, height/2, 800, 800);
       if (door2D.duration() == door2D.time()) {
         door2D.stop();
@@ -99,6 +100,7 @@ public void playerPositionDetect(Player p) {
 
     if (p.gameDimen == 3 && tempDtime != doorTime && gameState == 2) { 
       door3D.play();
+      doorLockMove = true;
       image(door3D, width/2, height/2, 800, 800);
       if (door3D.duration() == door3D.time()) {
         door3D.stop();
@@ -108,6 +110,7 @@ public void playerPositionDetect(Player p) {
 
     if (p.gameDimen == 2 && tempDtime != doorTime && gameState == 3) { 
       LM2ddoor.play();
+      doorLockMove = true;
       image(LM2ddoor, width/2, height/2, width, height);
       if (mirageChanged == false) {
         image(MirageB1, width/2, height/2, width, height);
@@ -122,6 +125,7 @@ public void playerPositionDetect(Player p) {
 
     if (p.gameDimen == 3 && tempDtime != doorTime && gameState == 3) { 
       LM3ddoor.play();
+      doorLockMove = true;
       image(LM3ddoor, width/2, height/2, width, height);
       if (mirageChanged == false) {
         image(MirageB1, width/2, height/2, width, height);

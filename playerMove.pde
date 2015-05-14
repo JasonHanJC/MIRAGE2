@@ -186,6 +186,7 @@ void playerMove(Player p) {
           last2StepA[1] = 18;
           last2StepB[0] = 17;
           last2StepB[1] = 17;
+          doorLockMove = false;
           gameState = 6;
         } else {
           gameState = 7;
@@ -238,6 +239,7 @@ void playerMove(Player p) {
           last2StepA[1] = 18;
           last2StepB[0] = 17;
           last2StepB[1] = 17;
+          doorLockMove = false;
           gameState = 6;
         } else {
           gameState = 7;

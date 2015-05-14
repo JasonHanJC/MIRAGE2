@@ -6,6 +6,7 @@ int savedTime;
 int gameState;
 int chooseStage = 0;
 boolean choosedStage = false;
+boolean doorLockMove = false;
 
 float beginAx;
 float beginAy;
@@ -325,7 +326,7 @@ void draw() {
     blockInitial = 0;
     S2wrongTime = 0;
     numofDoor = 2;
-
+    doorLockMove = false;
     gameState = 0;
   }
   /******************  State 4 scenario 1  ********************/
@@ -532,10 +533,10 @@ void keyPressed() {
   }
 
   //throw dice
-  if ((gameState == 2 || gameState == 3) && key == ' ' && diceThrowed == false) {
+  if ((gameState == 2 || gameState == 3) && key == ' ' && diceThrowed == false && steps == 0) {
     whichDice = int(random(-0.5, 6));
   }
-  if (gameState == 4 && key == ' ') {
+  if (gameState == 4 && key == ' ' && steps == 0) {
     switch(scenarioDice) {
     case 0:
       whichDice = 1;
@@ -551,7 +552,7 @@ void keyPressed() {
       break;
     }
   }
-  if (gameState == 5 && key == ' ') {
+  if (gameState == 5 && key == ' ' && steps == 0) {
     switch(scenarioDice) {
     case 0:
       whichDice = 4;
@@ -581,9 +582,9 @@ void keyPressed() {
   }
 
   //piece move
-  if (playerA.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5 || gameState == 3)) {
+  if (playerA.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5 || gameState == 3) && doorLockMove == false) {
     pieceMove(playerA);
-  } else if (playerB.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5 || gameState == 3)) {
+  } else if (playerB.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5 || gameState == 3) && doorLockMove == false) {
     pieceMove(playerB);
   }
 
@@ -592,6 +593,7 @@ void keyPressed() {
     doorChooseNo = (doorChooseNo + 1) % numofDoor;
   }
   if ((playerA.isAtDoor() == true || playerB.isAtDoor() == true ) && (gameState == 2 || gameState == 3) && keyCode == ENTER) {
+    doorLockMove = false;
     doorChanged = true;
     //enter door you wanna go
     switch(doorChooseNo) {
