@@ -3,7 +3,7 @@ import processing.video.*;
 import gifAnimation.*;
 
 int savedTime;
-int gameState;
+int gameState = 10;
 int chooseStage = 0;
 boolean choosedStage = false;
 boolean doorLockMove = false;
@@ -105,8 +105,6 @@ void setup() {
   last2StepB = new int[] {
     0, 0
   };
-
-  gameState = 0;
 }
 
 void movieEvent(Movie m) {
@@ -117,6 +115,8 @@ void draw() {
   //println("gameState " + gameState);
 
   //println("A : " + last2StepA[0] + " " + last2StepA[1] + "  B : " + last2StepB[0] + " " + last2StepB[1]);
+  if (keyPressed == true && (key == 'p' || key == 'P'))
+    gameState = 0;
 
   /******************    State 0 Intro    ******************/
   if (gameState == 0) {                        //startvideo
@@ -391,8 +391,8 @@ void draw() {
         9, 9
       };
       gameState = 1;  //go to Dimen choose
-      cleanScenarioM();
-      System.gc();
+      //      cleanScenarioM();
+      //      System.gc();
     }
   }
   /******************  State 8 Choose Game Level ********************/
@@ -423,17 +423,17 @@ void draw() {
         image(scenario1, width/2, height/2, width, height);
         if (scenario1.time() == scenario1.duration()) {
           scenario1.stop();
-          cleanTitleM();
-          System.gc();
+          //          cleanTitleM();
+          //          System.gc();
           gameState = 4;
         }
         break;
       case 1:
         blockLib.clear();
         blockInitial = 4;
-        cleanTitleM();
-        cleanScenarioM();
-        System.gc();
+        //        cleanTitleM();
+        //        cleanScenarioM();
+        //        System.gc();
         initialBlock();
         playerA = new Player("A", true, 0, b10);
         playerB = new Player("B", false, 0, b9);
@@ -448,12 +448,13 @@ void draw() {
       case 2:
         blockLib.clear();
         doorLib.clear();
-        cleanTitleM();
-        cleanScenarioM();
-        cleanDoorM();
-        System.gc();
+        //        cleanTitleM();
+        //        cleanScenarioM();
+        //        cleanDoorM();
+        //        System.gc();
         blockInitial = 5;
         initialBlock();
+        numofDoor = 5;
         playerA = new Player("A", true, 0, b18);
         playerB = new Player("B", false, 0, b17);
         last2StepA = new int[] {
@@ -602,7 +603,7 @@ void keyPressed() {
       if (playerA.myTurn == true) {
         if (playerA.currentBlock != b0) {
           playerA.setCurrentBlock(b0);
-          last2StepA[0] = last2StepA[1];
+          last2StepA[0] = b0.num;
           last2StepA[1] = b0.num;
         } else {
           sameDoor = true;
@@ -611,7 +612,7 @@ void keyPressed() {
       } else {
         if (playerB.currentBlock != b0) {
           playerB.setCurrentBlock(b0);
-          last2StepB[0] = last2StepB[1];
+          last2StepB[0] = b0.num;
           last2StepB[1] = b0.num;
         } else {
           sameDoor = true;
@@ -624,7 +625,7 @@ void keyPressed() {
       if (playerA.myTurn == true) {
         if (playerA.currentBlock != b1) {
           playerA.setCurrentBlock(b1);
-          last2StepA[0] = last2StepA[1];
+          last2StepA[0] = b1.num;
           last2StepA[1] = b1.num;
         } else {
           sameDoor = true;
@@ -633,7 +634,7 @@ void keyPressed() {
       } else {
         if (playerB.currentBlock != b1) {
           playerB.setCurrentBlock(b1);
-          last2StepB[0] = last2StepB[1];
+          last2StepB[0] = b1.num;
           last2StepB[1] = b1.num;
         } else {
           sameDoor = true;
@@ -646,7 +647,7 @@ void keyPressed() {
       if (playerA.myTurn == true) {
         if (playerA.currentBlock != b2) {
           playerA.setCurrentBlock(b2);
-          last2StepA[0] = last2StepA[1];
+          last2StepA[0] = b2.num;
           last2StepA[1] = b2.num;
         } else {
           sameDoor = true;
@@ -655,7 +656,7 @@ void keyPressed() {
       } else {
         if (playerB.currentBlock != b2) {
           playerB.setCurrentBlock(b2);
-          last2StepB[0] = last2StepB[1];
+          last2StepB[0] = b2.num;
           last2StepB[1] = b2.num;
         } else {
           sameDoor = true;
@@ -668,7 +669,7 @@ void keyPressed() {
       if (playerA.myTurn == true) {
         if (playerA.currentBlock != b3) {
           playerA.setCurrentBlock(b3);
-          last2StepA[0] = last2StepA[1];
+          last2StepA[0] = b3.num;
           last2StepA[1] = b3.num;
         } else {
           sameDoor = true;
@@ -677,7 +678,7 @@ void keyPressed() {
       } else {
         if (playerB.currentBlock != b3) {
           playerB.setCurrentBlock(b3);
-          last2StepB[0] = last2StepB[1];
+          last2StepB[0] = b3.num;
           last2StepB[1] = b3.num;
         } else {
           sameDoor = true;
@@ -690,7 +691,7 @@ void keyPressed() {
       if (playerA.myTurn == true) {
         if (playerA.currentBlock != b4) {
           playerA.setCurrentBlock(b4);
-          last2StepA[0] = last2StepA[1];
+          last2StepA[0] = b4.num;
           last2StepA[1] = b4.num;
         } else {
           sameDoor = true;
@@ -699,7 +700,7 @@ void keyPressed() {
       } else {
         if (playerB.currentBlock != b4) {
           playerB.setCurrentBlock(b4);
-          last2StepB[0] = last2StepB[1];
+          last2StepB[0] = b4.num;
           last2StepB[1] = b4.num;
         } else {
           sameDoor = true;
