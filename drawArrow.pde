@@ -1,58 +1,57 @@
 void drawArrow(Player p) {
   if (p.name == "A") {   //player A
     if (p.gameDimen == 2) {  //2d
-      if (p.currentBlock.aviBloc2d[0] != -1 && p.currentBlock.aviBloc2d[0] != last2StepA[0]) {
+      if (p.currentBlock.aviBloc2d[0] != -1 && (p.currentBlock.aviBloc2d[0] != last2StepA[0] || last2StepA[0] == last2StepA[1])) {
         drawUp(blockLib.get(p.currentBlock.aviBloc2d[0]).center);
       }
-      if (p.currentBlock.aviBloc2d[1] != -1 && p.currentBlock.aviBloc2d[1] != last2StepA[0]) {
+      if (p.currentBlock.aviBloc2d[1] != -1 && (p.currentBlock.aviBloc2d[1] != last2StepA[0] || last2StepA[0] == last2StepA[1])) {
         drawDown(blockLib.get(p.currentBlock.aviBloc2d[1]).center);
       }
-      if (p.currentBlock.aviBloc2d[2] != -1 && p.currentBlock.aviBloc2d[2] != last2StepA[0]) {
+      if (p.currentBlock.aviBloc2d[2] != -1 && (p.currentBlock.aviBloc2d[2] != last2StepA[0] || last2StepA[0] == last2StepA[1])) {
         drawLeft(blockLib.get(p.currentBlock.aviBloc2d[2]).center);
       }
-      if (p.currentBlock.aviBloc2d[3] != -1 && p.currentBlock.aviBloc2d[3] != last2StepA[0]) {
+      if (p.currentBlock.aviBloc2d[3] != -1 && (p.currentBlock.aviBloc2d[3] != last2StepA[0] || last2StepA[0] == last2StepA[1])) {
         drawRight(blockLib.get(p.currentBlock.aviBloc2d[3]).center);
       }
     } else {  //3d
-      if (p.currentBlock.aviBloc3d[0] != -1 && p.currentBlock.aviBloc3d[0] != last2StepA[0]) {
+      if (p.currentBlock.aviBloc3d[0] != -1 && (p.currentBlock.aviBloc3d[0] != last2StepA[0] || last2StepA[0] == last2StepA[1])) {
         drawUp(blockLib.get(p.currentBlock.aviBloc3d[0]).center);
       }
-      if (p.currentBlock.aviBloc3d[1] != -1 && p.currentBlock.aviBloc3d[1] != last2StepA[0]) {
+      if (p.currentBlock.aviBloc3d[1] != -1 && (p.currentBlock.aviBloc3d[1] != last2StepA[0] || last2StepA[0] == last2StepA[1])) {
         drawDown(blockLib.get(p.currentBlock.aviBloc3d[1]).center);
       }
-      if (p.currentBlock.aviBloc3d[2] != -1 && p.currentBlock.aviBloc3d[2] != last2StepA[0]) {
+      if (p.currentBlock.aviBloc3d[2] != -1 && (p.currentBlock.aviBloc3d[2] != last2StepA[0] || last2StepA[0] == last2StepA[1])) {
         drawLeft(blockLib.get(p.currentBlock.aviBloc3d[2]).center);
       }
-      if (p.currentBlock.aviBloc3d[3] != -1 && p.currentBlock.aviBloc3d[3] != last2StepA[0]) {
+      if (p.currentBlock.aviBloc3d[3] != -1 && (p.currentBlock.aviBloc3d[3] != last2StepA[0] || last2StepA[0] == last2StepA[1])) {
         drawRight(blockLib.get(p.currentBlock.aviBloc3d[3]).center);
       }
     }
   } else {  // player B
   if (p.gameDimen == 2) {  //2d
-      if (p.currentBlock.aviBloc2d[0] != -1 && p.currentBlock.aviBloc2d[0] != last2StepB[0]) {
-        //
+      if (p.currentBlock.aviBloc2d[0] != -1 && (p.currentBlock.aviBloc2d[0] != last2StepB[0] || last2StepB[0] == last2StepB[1])) {
         drawUp(blockLib.get(p.currentBlock.aviBloc2d[0]).center);
       }
-      if (p.currentBlock.aviBloc2d[1] != -1 && p.currentBlock.aviBloc2d[1] != last2StepB[0]) {
+      if (p.currentBlock.aviBloc2d[1] != -1 && (p.currentBlock.aviBloc2d[1] != last2StepB[0] || last2StepB[0] == last2StepB[1])) {
         drawDown(blockLib.get(p.currentBlock.aviBloc2d[1]).center);
       }
-      if (p.currentBlock.aviBloc2d[2] != -1 && p.currentBlock.aviBloc2d[2] != last2StepB[0]) {
+      if (p.currentBlock.aviBloc2d[2] != -1 && (p.currentBlock.aviBloc2d[2] != last2StepB[0] || last2StepB[0] == last2StepB[1])) {
         drawLeft(blockLib.get(p.currentBlock.aviBloc2d[2]).center);
       }
-      if (p.currentBlock.aviBloc2d[3] != -1 && p.currentBlock.aviBloc2d[3] != last2StepB[0]) {
+      if (p.currentBlock.aviBloc2d[3] != -1 && (p.currentBlock.aviBloc2d[3] != last2StepB[0] || last2StepB[0] == last2StepB[1])) {
         drawRight(blockLib.get(p.currentBlock.aviBloc2d[3]).center);
       }
     } else {  //3d
-      if (p.currentBlock.aviBloc3d[0] != -1 && p.currentBlock.aviBloc3d[0] != last2StepB[0]) {
+      if (p.currentBlock.aviBloc3d[0] != -1 && (p.currentBlock.aviBloc3d[0] != last2StepB[0] || last2StepB[0] == last2StepB[1])) {
         drawUp(blockLib.get(p.currentBlock.aviBloc3d[0]).center);
       }
-      if (p.currentBlock.aviBloc3d[1] != -1 && p.currentBlock.aviBloc3d[1] != last2StepB[0]) {
+      if (p.currentBlock.aviBloc3d[1] != -1 && (p.currentBlock.aviBloc3d[1] != last2StepB[0] || last2StepB[0] == last2StepB[1])) {
         drawDown(blockLib.get(p.currentBlock.aviBloc3d[1]).center);
       }
-      if (p.currentBlock.aviBloc3d[2] != -1 && p.currentBlock.aviBloc3d[2] != last2StepB[0]) {
+      if (p.currentBlock.aviBloc3d[2] != -1 && (p.currentBlock.aviBloc3d[2] != last2StepB[0] || last2StepB[0] == last2StepB[1])) {
         drawLeft(blockLib.get(p.currentBlock.aviBloc3d[2]).center);
       }
-      if (p.currentBlock.aviBloc3d[3] != -1 && p.currentBlock.aviBloc3d[3] != last2StepB[0]) {
+      if (p.currentBlock.aviBloc3d[3] != -1 && (p.currentBlock.aviBloc3d[3] != last2StepB[0] || last2StepB[0] == last2StepB[1])) {
         drawRight(blockLib.get(p.currentBlock.aviBloc3d[3]).center);
       }
     }
