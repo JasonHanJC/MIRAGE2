@@ -5,6 +5,8 @@ Movie LM3to2;
 Movie LM2to3;
 Movie LM2ddoor;
 Movie LM3ddoor;
+Movie LMRwin;
+Movie LMYwin;
 Movie ychange1to2;
 Movie ychange2to1;
 PImage chooseDoorR;
@@ -13,6 +15,8 @@ PImage chooseDoorY;
 //door
 Movie door2D;
 Movie door3D;
+Movie LDRwin;
+Movie LDYwin;
 
 //stair
 Movie LMstairsL2d;
@@ -25,7 +29,6 @@ Gif menuChoose;
 PImage menu;
 
 
-Movie win;
 Movie doorLevel;
 Movie mirageLevel;
 Gif keyDice;
@@ -100,13 +103,15 @@ void initialInterface() {
   dsstop1 = new Movie(this, "staireffect1.mov");
   dsstop2 = new Movie(this, "staireffect2.mov");
   doorLevel = new Movie(this, "doorlevel.mov");
+  LDRwin = new Movie(this, "LDRwin.mov");
+  LDYwin = new Movie(this, "LDYwin.mov");
 
   //title
   title = new Movie(this, "title.mov");
 
   //scenario
-  scenario12 = loadImage("senario1.2.jpg");
-  scenario13 = loadImage("senario1.3.jpg");
+  scenario12 = loadImage("scenario1.2.jpg");
+  scenario13 = loadImage("scenario1.3.jpg");
   bgR = loadImage("bgR.jpg");
   bgL = loadImage("bgL.jpg");
   scenario2L2 = loadImage("senario2_L2d.png");
@@ -144,6 +149,8 @@ void initialInterface() {
   LMstairsL2d = new Movie(this, "LMstairsL2d.mov");
   LMstairsM2d = new Movie(this, "LMstairsM2d.mov");
   LMstairsR2d = new Movie(this, "LMstairsR2d.mov");
+  LMRwin = new Movie(this, "LMRwin.mov");
+  LMYwin = new Movie(this, "LMYwin.mov");
 
 
   //all time use
@@ -160,7 +167,6 @@ void initialInterface() {
   turnR = loadImage("turnR.png");
   turnB = loadImage("turnB.png");
   oswald = loadFont("Oswald-28.vlw");
-  win = new Movie(this, "win.mov");
   keyDice = new Gif(this, "keySpaceTrow.gif");
   keya = loadImage("keyA.png");
   keyb = loadImage("keyB.png");
@@ -180,36 +186,36 @@ void initialInterface() {
   menu = loadImage("menu.jpg");
 }
 
-void cleanDoorM() {
-  map3ds = null;
-  map2ds = null;
-  c2to3 = null;
-  c3to2 = null;
-  door2D = null;
-  door3D = null;
-  dsstop1 = null;
-  dsstop2 = null;
-  doorLevel = null;
-}
-
-void cleanScenarioM() {
-  scenario12 = null;
-  scenario13 = null;
-  bgR = null;
-  bgL = null;
-  scenario2L2 = null;
-  scenario2L3 = null;
-  scenario2R2 = null;
-  scenario2R3 = null;
-  scenario1 = null;
-  scenario2 = null;
-  S2stairsStop = null;
-  S2L2to3 = null;
-  S2R3to2 = null;
-  S2wrong = null;
-}
-
-void cleanTitleM() {
-  title = null;
-}
+//void cleanDoorM() {
+//  map3ds = null;
+//  map2ds = null;
+//  c2to3 = null;
+//  c3to2 = null;
+//  door2D = null;
+//  door3D = null;
+//  dsstop1 = null;
+//  dsstop2 = null;
+//  doorLevel = null;
+//}
+//
+//void cleanScenarioM() {
+//  scenario12 = null;
+//  scenario13 = null;
+//  bgR = null;
+//  bgL = null;
+//  scenario2L2 = null;
+//  scenario2L3 = null;
+//  scenario2R2 = null;
+//  scenario2R3 = null;
+//  scenario1 = null;
+//  scenario2 = null;
+//  S2stairsStop = null;
+//  S2L2to3 = null;
+//  S2R3to2 = null;
+//  S2wrong = null;
+//}
+//
+//void cleanTitleM() {
+//  title = null;
+//}
 
