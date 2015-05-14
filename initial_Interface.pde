@@ -7,6 +7,8 @@ Movie LM2ddoor;
 Movie LM3ddoor;
 Movie ychange1to2;
 Movie ychange2to1;
+PImage chooseDoorR;
+PImage chooseDoorY;
 
 //door
 Movie door2D;
@@ -145,6 +147,8 @@ void initialInterface() {
 
 
   //all time use
+  chooseDoorR = loadImage("chooseDoor_R.png");
+  chooseDoorY = loadImage("chooseDoor_Y.png");
   pieceR = loadImage("piecer.png");
   pieceY = loadImage("piecey.png");
   pieceRspin = new Gif(this, "piecer_spin.gif");

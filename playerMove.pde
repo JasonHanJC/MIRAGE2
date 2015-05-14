@@ -83,9 +83,17 @@ void playerMove(Player p) {
     throwDice();
   } else {
     if (p.name == "A") {
-      image(keya, width/2, height-120, 263*0.4, 171*0.4);
+      if (p.isAtDoor() == true && doorLockMove == true) {
+        image(chooseDoorR, width/2, height-120, 160, 68);
+      } else {
+        image(keya, width/2, height-120, 263*0.4, 171*0.4);
+      }
     } else {
-      image(keyb, width/2, height-120, 263*0.4, 171*0.4);
+      if (p.isAtDoor() == true && doorLockMove == true) {
+        image(chooseDoorY, width/2, height-120, 160, 68);
+      } else {
+        image(keyb, width/2, height-120, 263*0.4, 171*0.4);
+      }
     }
   }
   textFont(oswald);
@@ -138,8 +146,8 @@ void playerMove(Player p) {
 
   if (gameState == 3)
     changeMirage();
-    
-    /***************************at final***************************/
+
+  /***************************at final***************************/
   if (p.name == "A") {
     if (p.isAtFinal() == true && steps == 0 && (gameState == 2 || gameState == 3)) {
       win.play();
@@ -252,9 +260,9 @@ void playerMove(Player p) {
 
 void changeTurn() {
   turnCount++;
-//  println(turnCount);
-//  println(mirageChanged);
-//  println(mirageChange);
+  //  println(turnCount);
+  //  println(mirageChanged);
+  //  println(mirageChange);
   if (playerA.myTurn == true) {
     playerA.setMyTurn(false);
     playerB.setMyTurn(true);
