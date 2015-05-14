@@ -260,7 +260,7 @@ public void playerPositionDetect(Player p) {
     }
     
     if (p.currentBlock.num == 7 || p.currentBlock.num == 8) {
-      LMstairsL2d.play();
+      LMstairsM2d.play();
       image(LMstairsM2d, width/2, height/2, width, height);
       if ( LMstairsM2d.duration() == LMstairsM2d.time()) {
         LMstairsM2d.stop();
