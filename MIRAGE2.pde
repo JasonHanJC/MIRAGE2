@@ -4,6 +4,8 @@ import gifAnimation.*;
 
 int savedTime;
 int gameState;
+int chooseStage = 0;
+boolean choosedStage = false;
 
 float beginAx;
 float beginAy;
@@ -49,7 +51,7 @@ int tempDtime;
 
 boolean stopMove;
 
-//1: scenario 1   2: scenario 2   3: scenario 3  4: game
+//1: scenario 1   2: scenario 2   3: scenario 3  4: game  5:full game
 int blockInitial = 0;
 int scenarioDice = 0;
 int S2wrongTime = 0;
@@ -89,8 +91,7 @@ void setup() {
   stairErr = false;
 
   stopMove = false;
-  diceSize = 200;
-
+  diceSize = 300;
 
   blockInitial = 1;
   initialBlock();
@@ -104,7 +105,6 @@ void setup() {
     0, 0
   };
 
-
   gameState = 0;
 }
 
@@ -113,27 +113,25 @@ void movieEvent(Movie m) {
 }
 
 void draw() { 
-  println("A : " + last2StepA[0] + " " + last2StepA[1] + "  B : " + last2StepB[0] + " " + last2StepB[1]);
-  //int passedTime = millis() - savedTime;
+  //println("gameState " + gameState);
+
+  //println("A : " + last2StepA[0] + " " + last2StepA[1] + "  B : " + last2StepB[0] + " " + last2StepB[1]);
+
   /******************    State 0 Intro    ******************/
   if (gameState == 0) {                        //startvideo
     title.play();
-    image(title, width/2, height/2, 900, 900);
+    image(title, width/2, height/2, width, height);
     if (title.time() == title.duration()) {
-      scenario1.play();
-      image(scenario1, width/2, height/2, width, height);
-    }
-    if (scenario1.time() == scenario1.duration()) {
-      gameState = 4;  //go to scenario 1
-      println("In scenario 1");
+      gameState = 8;  //menu
+      title.stop();
     }
   }
 
-  /***************    State 1 Choose Dimension    ***************/
+  /***************    State 1 Door level Choose Dimension    ***************/
   if (gameState == 1) {   
-    image(toWin, width/2, height/2, width, height);
+    image(doorLevel, width/2, height/2, width, height);
 
-    if (toWin.time() == toWin.duration()) {
+    if (doorLevel.time() == doorLevel.duration()) {
 
       if (playerAChoose == true) {
 
@@ -178,7 +176,7 @@ void draw() {
       if (wrongInput == true) {
         textSize(20);
         fill(255, 239, 0);
-        text("Error! Please Input 2 or 3", width/2-100, 790);
+        text("Please Press 2 or 3", width/2-80, 840);
       }
 
       playerA.setDimen(playerADimen);
@@ -189,17 +187,97 @@ void draw() {
         gameState = 2;
       }
     } else {
-      toWin.play();
+      doorLevel.play();
     }
-  } else {
-    EnterCount = 0;
   }
 
-  /******************  State 2 Game Start  ********************/
+  /***************    State 6 Full level Choose Dimension    ***************/
+  if (gameState == 6) {   
+    image(mirageLevel, width/2, height/2, width, height);
+
+    if (mirageLevel.time() == mirageLevel.duration()) {
+      if (playerAChoose == true) {
+
+        image(chooseRLM, width/2, height/2, width, height);
+        image(chooseSpinR, width/4*3, height/2-20, 230, 360);
+        chooseSpinR.play();
+        if (playerADimen != 0) {
+          if (playerADimen == 2) {
+            image(dlogo_a2d, width/4*3, height/2-100, 71*0.5, 92*0.5);
+          } else if (playerADimen == 3) {
+            image(dlogo_a3d, width/4*3, height/2-100, 79*0.5, 92*0.5);
+          }
+        }
+        if (playerBDimen != 0) {
+          if (playerBDimen == 2) {
+            image(dlogo_b2d, width/4, height/2-100, 71*0.5, 92*0.5);
+          } else if (playerBDimen == 3) {
+            image(dlogo_b3d, width/4, height/2-100, 79*0.5, 92*0.5);
+          }
+        }
+      }
+
+      if (playerBChoose == true) {
+        image(chooseYLM, width/2, height/2, width, height);
+        image(chooseSpinY, width/4, height/2-20, 230, 360);
+        chooseSpinY.play();
+        if (playerBDimen != 0) {
+          if (playerBDimen == 2) {
+            image(dlogo_b2d, width/4, height/2-100, 71*0.5, 92*0.5);
+          } else if (playerBDimen == 3) {
+            image(dlogo_b3d, width/4, height/2-100, 79*0.5, 92*0.5);
+          }
+        }
+        if (playerADimen != 0) {
+          if (playerADimen == 2) {
+            image(dlogo_a2d, width/4*3, height/2-100, 71*0.5, 92*0.5);
+          } else if (playerADimen == 3) {
+            image(dlogo_a3d, width/4*3, height/2-100, 79*0.5, 92*0.5);
+          }
+        }
+      }
+      if (wrongInput == true) {
+        textSize(20);
+        fill(255, 239, 0);
+        text("Please Press 2 or 3", width/2-80, 840);
+      }
+
+      playerA.setDimen(playerADimen);
+      playerB.setDimen(playerBDimen);
+      //println(playerADimen +"  "+ playerBDimen +"  "+playerA.gameDimen + "  " + playerB.gameDimen + "  " + EnterCount);
+
+      if (playerA.gameDimen != 0 && playerB.gameDimen != 0 && EnterCount == 2 ) {
+        //delay(2000);
+        mirageLevel = null;
+        gameState = 3; // level Mirage
+      }
+    } else {
+      mirageLevel.play();
+    }
+  } 
+
+  /******************  State 2 door level Start  ********************/
 
   if (gameState == 2) {   
-
+    //println(turnCount);
     //println(diceThrowed);  
+
+    if (playerA.myTurn == true) {
+      //println("PlayerA Move");
+
+      playerMove(playerA);
+    }
+
+
+    if (playerB.myTurn == true) {
+      //println("PlayerB Move");
+      playerMove(playerB);
+    }
+  }
+
+  /******************  State 3 Mirage level ********************/
+  if (gameState == 3) {   
+    //println(mirageChanged);  
 
     if (playerA.myTurn == true) {
       //println("PlayerA Move");
@@ -213,8 +291,8 @@ void draw() {
     }
   }
 
-  /******************  State 3 Game Start Over  ********************/
-  if (gameState == 3) {
+  /******************  State 7 Game Start Over  ********************/
+  if (gameState == 7) {
     playerA.setMyTurn(true);
     playerA.setDimen(0);
     playerA.setCurrentBlock(b10);
@@ -222,7 +300,7 @@ void draw() {
     playerB.setDimen(0);
     playerB.setCurrentBlock(b9);
     //ssavedTime = millis();
-
+    turnCount = 0;
     playerAChoose = true;
     playerBChoose = false;
     playerADimen = 0;
@@ -246,11 +324,14 @@ void draw() {
     last2StepB[1] = 9;
     blockInitial = 0;
     S2wrongTime = 0;
+    numofDoor = 2;
 
     gameState = 0;
   }
   /******************  State 4 scenario 1  ********************/
   if (gameState == 4) {
+
+
     //println(playerA.gameDimen +"   "+ playerA.myTurn + " " + playerA.currentBlock.name);
     //println("In scenario 1");
     if (playerA.myTurn == true) {
@@ -277,7 +358,6 @@ void draw() {
         last2StepB[0] = 0;
         last2StepB[1] = 0;
         gameState = 5;  //go to scenario 2
-        println("In scenario 2");
       }
     }
   }
@@ -285,6 +365,7 @@ void draw() {
   /******************  State 5 scenario 2  ********************/
   if (gameState == 5) {
     //println(playerA.gameDimen +"   "+ playerA.myTurn + " " + playerA.currentBlock.name);
+
 
     if (playerA.myTurn == true) {
       //println("PlayerA Move");
@@ -309,39 +390,112 @@ void draw() {
         9, 9
       };
       gameState = 1;  //go to Dimen choose
+      cleanScenarioM();
+      System.gc();
+    }
+  }
+  /******************  State 8 Choose Game Level ********************/
+  if (gameState == 8) {
+    image(menu, width/2, height/2, width, height);
+    switch(chooseStage) {
+    case 0:
+      image(menuChoose, width/2, height/2-180, width, height);
+      menuChoose.play();
+      break;
+    case 1:
+      image(menuChoose, width/2, height/2, width, height);
+      menuChoose.play();
+      break;
+    case 2:
+      image(menuChoose, width/2, height/2+170, width, height);
+      menuChoose.play();
+      break;
+    }
+    textFont(oswald);
+    textSize(20);
+    fill(255, 239, 0);
+    text("Press UP and DOWN Then Hit ENTER", width/2-140, 790);
+    if (choosedStage == true) {
+      switch(chooseStage) {
+      case 0:
+        scenario1.play();
+        image(scenario1, width/2, height/2, width, height);
+        if (scenario1.time() == scenario1.duration()) {
+          scenario1.stop();
+          cleanTitleM();
+          System.gc();
+          gameState = 4;
+        }
+        break;
+      case 1:
+        blockLib.clear();
+        blockInitial = 4;
+        cleanTitleM();
+        cleanScenarioM();
+        System.gc();
+        initialBlock();
+        playerA = new Player("A", true, 0, b10);
+        playerB = new Player("B", false, 0, b9);
+        last2StepA = new int[] {
+          10, 10
+        };
+        last2StepB = new int[] {
+          9, 9
+        };
+        gameState = 1;  //go to Dimen choose
+        break;
+      case 2:
+        blockLib.clear();
+        doorLib.clear();
+        cleanTitleM();
+        cleanScenarioM();
+        cleanDoorM();
+        System.gc();
+        blockInitial = 5;
+        initialBlock();
+        playerA = new Player("A", true, 0, b18);
+        playerB = new Player("B", false, 0, b17);
+        last2StepA = new int[] {
+          18, 18
+        };
+        last2StepB = new int[] {
+          17, 17
+        };
+        gameState = 6;
+        break;
+      }
     }
   }
 }
 
-
-
-void changeTurn() {
-  if (playerA.myTurn == true) {
-    playerA.setMyTurn(false);
-    playerB.setMyTurn(true);
-    stopMove = false;
-    doorChanged = false;
-    if (playerA.currentBlock.name != "door" && playerB.currentBlock.name != "door") {
-      sameDoor = false;
-      nowAtDoor = false;
-    }
-  } else {
-    playerB.setMyTurn(false);
-    playerA.setMyTurn(true);
-    stopMove = false;
-    doorChanged = false;
-    if (playerA.currentBlock.name != "door" && playerB.currentBlock.name != "door") {
-      sameDoor = false;
-      nowAtDoor = false;
-    }
-  }
-}
 
 
 void keyPressed() {
 
+  //choose game state
+  if (gameState == 8 && (keyCode == UP || keyCode == DOWN)) {
+    if (keyCode == UP) {
+      if (chooseStage == 0) {
+        chooseStage = 2;
+      } else {
+        chooseStage--;
+      }
+    }
+    if (keyCode == DOWN) {
+      if (chooseStage == 2) {
+        chooseStage = 0;
+      } else {
+        chooseStage++;
+      }
+    }
+  }
+  if (gameState == 8 && keyCode == ENTER) {
+    choosedStage = true;
+  }
+
+
   //confirm dimention
-  if (gameState == 1 && key == '2') {
+  if ((gameState == 1 || gameState == 6) && key == '2') {
     if (playerAChoose == true) {
       playerADimen = 2;
       wrongInput = false;
@@ -349,7 +503,7 @@ void keyPressed() {
       playerBDimen = 2;
       wrongInput = false;
     }
-  } else if (gameState == 1 && key == '3') {
+  } else if ((gameState == 1 || gameState == 6) && key == '3') {
     if (playerAChoose == true) {
       playerADimen = 3;
       wrongInput = false;
@@ -361,9 +515,10 @@ void keyPressed() {
     wrongInput = true;
   }
 
-  if (gameState == 1 && keyCode == ENTER) {
+  if ((gameState == 1 || gameState == 6) && keyCode == ENTER) {
     if (playerADimen != 0 && playerBDimen != 0)
       EnterCount = 2;
+    //println(playerADimen + playerBDimen);
     //println("EnterCount " + EnterCount);
     if (playerAChoose == true) {
       playerAChoose = false;
@@ -377,7 +532,7 @@ void keyPressed() {
   }
 
   //throw dice
-  if (gameState == 2 && key == ' ' && diceThrowed == false) {
+  if ((gameState == 2 || gameState == 3) && key == ' ' && diceThrowed == false) {
     whichDice = int(random(-0.5, 6));
   }
   if (gameState == 4 && key == ' ') {
@@ -426,17 +581,17 @@ void keyPressed() {
   }
 
   //piece move
-  if (playerA.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5)) {
+  if (playerA.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5 || gameState == 3)) {
     pieceMove(playerA);
-  } else if (playerB.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5)) {
+  } else if (playerB.myTurn == true && (gameState == 2 || gameState == 4 || gameState == 5 || gameState == 3)) {
     pieceMove(playerB);
   }
 
   //choose door
-  if (gameState == 2 && key == 'C'|| key == 'c') {
+  if ((gameState == 2 || gameState == 3)&& (key == 'C'|| key == 'c')) {
     doorChooseNo = (doorChooseNo + 1) % numofDoor;
   }
-  if ((playerA.isAtDoor() == true || playerB.isAtDoor() == true ) && gameState == 2 && keyCode == ENTER) {
+  if ((playerA.isAtDoor() == true || playerB.isAtDoor() == true ) && (gameState == 2 || gameState == 3) && keyCode == ENTER) {
     doorChanged = true;
     //enter door you wanna go
     switch(doorChooseNo) {
@@ -483,42 +638,76 @@ void keyPressed() {
         }
         break;
       }
+
+    case 2: 
+
+      if (playerA.myTurn == true) {
+        if (playerA.currentBlock != b2) {
+          playerA.setCurrentBlock(b2);
+          last2StepA[0] = last2StepA[1];
+          last2StepA[1] = b2.num;
+        } else {
+          sameDoor = true;
+        }
+        break;
+      } else {
+        if (playerB.currentBlock != b2) {
+          playerB.setCurrentBlock(b2);
+          last2StepB[0] = last2StepB[1];
+          last2StepB[1] = b2.num;
+        } else {
+          sameDoor = true;
+        }
+        break;
+      }
+
+    case 3: 
+
+      if (playerA.myTurn == true) {
+        if (playerA.currentBlock != b3) {
+          playerA.setCurrentBlock(b3);
+          last2StepA[0] = last2StepA[1];
+          last2StepA[1] = b3.num;
+        } else {
+          sameDoor = true;
+        }
+        break;
+      } else {
+        if (playerB.currentBlock != b3) {
+          playerB.setCurrentBlock(b3);
+          last2StepB[0] = last2StepB[1];
+          last2StepB[1] = b3.num;
+        } else {
+          sameDoor = true;
+        }
+        break;
+      }
+
+    case 4: 
+
+      if (playerA.myTurn == true) {
+        if (playerA.currentBlock != b4) {
+          playerA.setCurrentBlock(b4);
+          last2StepA[0] = last2StepA[1];
+          last2StepA[1] = b4.num;
+        } else {
+          sameDoor = true;
+        }
+        break;
+      } else {
+        if (playerB.currentBlock != b4) {
+          playerB.setCurrentBlock(b4);
+          last2StepB[0] = last2StepB[1];
+          last2StepB[1] = b4.num;
+        } else {
+          sameDoor = true;
+        }
+        break;
+      }
     }
   }
 }
 
-//void mouseClicked() {
-//  if (gameState == 0) {
-//    title.pause();
-//    gameState = 4;
-//  }
-//  if (gameState == 4) {
-//    blockLib.clear();
-//    blockInitial = 2;
-//    initialBlock();
-//    playerA = new Player("A", false, 3, b10);
-//    playerB = new Player("B", true, 2, b2);
-//    last2StepA[0] = 10;
-//    last2StepA[1] = 10;
-//    last2StepB[0] = 2;
-//    last2StepB[1] = 2;
-//    gameState = 5;
-//  }
-//  if (gameState == 5) {
-//    blockLib.clear();
-//    blockInitial = 4;
-//    initialBlock();
-//    playerA = new Player("A", true, 0, b10);
-//    playerB = new Player("B", false, 0, b9);
-//    last2StepA = new int[] {
-//      10, 10
-//    };
-//    last2StepB = new int[] {
-//      9, 9
-//    };
-//    gameState = 1;
-//  }
-//}
 
 void delay(int delay) {
   int time = millis();

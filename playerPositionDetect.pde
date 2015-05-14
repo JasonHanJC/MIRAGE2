@@ -3,7 +3,6 @@ public void playerPositionDetect(Player p) {
   //println("currentStair = " + currentStair +  " pairedstair = " + pairedStair + "stairPassed: " + stairPassed);
   //println("tempDtime = " + tempDtime + "doorTime = " + doorTime + "nowAtDoor = " + nowAtDoor);
 
-
   //map display
   if (p.gameDimen == 2) {                          //2dview
     if (gameState == 4)
@@ -27,6 +26,14 @@ public void playerPositionDetect(Player p) {
     }
     if (gameState == 2)
       image(map2ds, width/2, height/2, width, height);
+    if (gameState == 3) {
+      image(LMmap2d, width/2, height/2, width, height);
+      if (mirageChanged == false) {
+        image(MirageB1, width/2, height/2, width, height);
+      } else {
+        image(MirageB2, width/2, height/2, width, height);
+      }
+    }
   }
   if (p.gameDimen == 3) {     //3dview
     if (gameState == 4)
@@ -50,9 +57,15 @@ public void playerPositionDetect(Player p) {
     }
     if (gameState == 2)
       image(map3ds, width/2, height/2, width, height);
+    if (gameState == 3) {
+      image(LMmap3d, width/2, height/2, width, height);
+      if (mirageChanged == false) {
+        image(MirageB1, width/2, height/2, width, height);
+      } else {
+        image(MirageB2, width/2, height/2, width, height);
+      }
+    }
   }
-
-
   /***************************at door***************************/
   if (p.isAtDoor() == true ) {
     if (p.name == "A") {
@@ -75,7 +88,7 @@ public void playerPositionDetect(Player p) {
       }
     }
 
-    if (p.gameDimen == 2 && tempDtime != doorTime) { 
+    if (p.gameDimen == 2 && tempDtime != doorTime && gameState == 2) { 
       door2D.play();
       image(door2D, width/2, height/2, 800, 800);
       if (door2D.duration() == door2D.time()) {
@@ -84,7 +97,7 @@ public void playerPositionDetect(Player p) {
       }
     }
 
-    if (p.gameDimen == 3 && tempDtime != doorTime) { 
+    if (p.gameDimen == 3 && tempDtime != doorTime && gameState == 2) { 
       door3D.play();
       image(door3D, width/2, height/2, 800, 800);
       if (door3D.duration() == door3D.time()) {
@@ -92,7 +105,38 @@ public void playerPositionDetect(Player p) {
         tempDtime = doorTime;
       }
     }
+
+    if (p.gameDimen == 2 && tempDtime != doorTime && gameState == 3) { 
+      LM2ddoor.play();
+      image(LM2ddoor, width/2, height/2, width, height);
+      if (mirageChanged == false) {
+        image(MirageB1, width/2, height/2, width, height);
+      } else {
+        image(MirageB2, width/2, height/2, width, height);
+      }
+      if (LM2ddoor.duration() == LM2ddoor.time()) {
+        LM2ddoor.stop();
+        tempDtime = doorTime;
+      }
+    }
+
+    if (p.gameDimen == 3 && tempDtime != doorTime && gameState == 3) { 
+      LM3ddoor.play();
+      image(LM3ddoor, width/2, height/2, width, height);
+      if (mirageChanged == false) {
+        image(MirageB1, width/2, height/2, width, height);
+      } else {
+        image(MirageB2, width/2, height/2, width, height);
+      }
+      if (LM3ddoor.duration() == LM3ddoor.time()) {
+        LM3ddoor.stop();
+        tempDtime = doorTime;
+      }
+    }
   }
+
+
+
 
   /***************************at yellow***************************/
 
@@ -103,17 +147,9 @@ public void playerPositionDetect(Player p) {
       if (c2to3.duration() == c2to3.time()) {
         c2to3.stop();
         p.setDimen(3);
-        stopMove = false;
-        p.setMyTurn(false);
-        if (p.name == "A") {
-          playerB.setMyTurn(true);
-          diceThrowed = false;
-          nowAtDoor = false;
-        } else {
-          playerA.setMyTurn(true);
-          diceThrowed = false;
-          nowAtDoor = false;
-        }
+        changeTurn();
+        diceThrowed = false;
+        nowAtDoor = false;
       }
     }
     //println(tempYtime);
@@ -123,17 +159,36 @@ public void playerPositionDetect(Player p) {
       if (c3to2.duration() == c3to2.time()) {
         c3to2.stop();
         p.setDimen(2);
-        stopMove = false;
-        p.setMyTurn(false);
-        if (p.name == "A") {
-          playerB.setMyTurn(true);
-          diceThrowed = false;
-          nowAtDoor = false;
-        } else {
-          playerA.setMyTurn(true);
-          diceThrowed = false;
-          nowAtDoor = false;
-        }
+        changeTurn();
+        diceThrowed = false;
+        nowAtDoor = false;
+      }
+    }
+  } 
+
+  ////////
+  if (p.isAtYellow() == true && gameState == 3) {
+    if (p.gameDimen == 2 && stopMove == true) {      //2d
+      LM2to3.play();
+      image(LM2to3, width/2, height/2, width, height);
+      if (LM2to3.duration() == LM2to3.time()) {
+        LM2to3.stop();
+        p.setDimen(3);
+        changeTurn();
+        diceThrowed = false;
+        nowAtDoor = false;
+      }
+    }
+    //println(tempYtime);
+    if (p.gameDimen == 3 && stopMove == true) {
+      LM3to2.play();
+      image(LM3to2, width/2, height/2, width, height);
+      if (LM3to2.duration() == LM3to2.time()) {
+        LM3to2.stop();
+        p.setDimen(2);
+        changeTurn();
+        diceThrowed = false;
+        nowAtDoor = false;
       }
     }
   } 
@@ -154,37 +209,66 @@ public void playerPositionDetect(Player p) {
 
   if (stairErr == true && gameState == 2) {
     if (p.currentBlock.num == 2) {
-      stop1.play();
-      image(stop1, width/2, height/2, 800, 800);
-      if ( stop1.duration() == stop1.time()) {
-        stop1.stop();
+      dsstop1.play();
+      image(dsstop1, width/2, height/2, 800, 800);
+      if ( dsstop1.duration() == dsstop1.time()) {
+        dsstop1.stop();
         stairErr = false;
       }
     }
 
     if (p.currentBlock.num == 3) {
-      stop1.play();
-      image(stop1, width/2, height/2, 800, 800);
-      if ( stop1.duration() == stop1.time()) {
-        stop1.stop();
+      dsstop1.play();
+      image(dsstop1, width/2, height/2, 800, 800);
+      if ( dsstop1.duration() == dsstop1.time()) {
+        dsstop1.stop();
         stairErr = false;
       }
     }
 
     if (p.currentBlock.num == 4) {
-      stop2.play();
-      image(stop2, width/2, height/2, 800, 800);
-      if ( stop2.duration() == stop2.time()) {
-        stop2.stop();
+      dsstop2.play();
+      image(dsstop2, width/2, height/2, 800, 800);
+      if ( dsstop2.duration() == dsstop2.time()) {
+        dsstop2.stop();
         stairErr = false;
       }
     }
 
     if (p.currentBlock.num == 5) {
-      stop2.play();
-      image(stop2, width/2, height/2, 800, 800);
-      if ( stop2.duration() == stop2.time()) {
-        stop2.stop();
+      dsstop2.play();
+      image(dsstop2, width/2, height/2, 800, 800);
+      if ( dsstop2.duration() == dsstop2.time()) {
+        dsstop2.stop();
+        stairErr = false;
+      }
+    }
+  }
+
+  if (stairErr == true && gameState == 3) {
+    if (p.currentBlock.num == 5 || p.currentBlock.num == 6) {
+      LMstairsL2d.play();
+      image(LMstairsL2d, width/2, height/2, width, height);
+      if ( LMstairsL2d.duration() == LMstairsL2d.time()) {
+        LMstairsL2d.stop();
+        stairErr = false;
+      }
+    }
+    
+    if (p.currentBlock.num == 7 || p.currentBlock.num == 8) {
+      LMstairsL2d.play();
+      image(LMstairsM2d, width/2, height/2, width, height);
+      if ( LMstairsM2d.duration() == LMstairsM2d.time()) {
+        LMstairsM2d.stop();
+        stairErr = false;
+      }
+    }
+    
+    if (p.currentBlock.num == 9 || p.currentBlock.num == 10) {
+      LMstairsR2d.play();
+      image(LMstairsR2d, width/2, height/2, width, height);
+      if ( LMstairsR2d.duration() == LMstairsR2d.time()) {
+        LMstairsR2d.stop();
         stairErr = false;
       }
     }
@@ -199,10 +283,10 @@ public void playerPositionDetect(Player p) {
       }
       if (p.currentBlock.num == 10 && p.gameDimen == 3) {
         b8 = new Block(8, "start", new PVector(1055, 627), new int[] {
-          100, 100, 9, 18
+          -1, -1, 9, 18
         }
         , new int[] {
-          100, 100, 10, 17
+          -1, -1, 10, 17
         }
         );
         blockLib.set(8, b8);
@@ -216,10 +300,10 @@ public void playerPositionDetect(Player p) {
       }
       if (p.currentBlock.num == 4 && p.gameDimen == 2) {
         b0 = new Block(0, "start", new PVector(308, 625), new int[] {
-          100, 100, 6, 1
+          -1, -1, 6, 1
         }
         , new int[] {
-          100, 100, 7, 2
+          -1, -1, 7, 2
         }
         );
         blockLib.set(0, b0);
@@ -307,32 +391,77 @@ public void playerPositionDetect(Player p) {
     }
   }
 
-
-  /***************************at final***************************/
-  if (p.name == "A") {
-    if (p.isAtFinal() == true && steps == 0 && gameState == 2) {
-      win.play();
-      image(win, width/2, height/2, 800, 800);
-      textFont(oswald);
-      textSize(75);
-      fill(255);
-      text("RED", width/2 - 43, height/2 - 40);
-      if (win.duration() == win.time()) {
-        win.stop();
-        gameState = 3;
+  //Mirage block dead end blocks
+  if (gameState == 3) {
+    //begin
+    if (p.name == "A") {
+      if ((p.currentBlock.num == 17 || p.currentBlock.num == 18)) {
+        last2StepA[0] = p.currentBlock.num;
+        last2StepA[1] = p.currentBlock.num;
+      }
+    } else {
+      if ((p.currentBlock.num == 17 || p.currentBlock.num == 18)) {
+        last2StepB[0] = p.currentBlock.num;
+        last2StepB[1] = p.currentBlock.num;
       }
     }
-  } else {
-    if (p.isAtFinal() == true && steps == 0 && gameState == 2) {
-      win.play();
-      image(win, width/2, height/2, 800, 800);
-      textFont(oswald);
-      textSize(75);
-      fill(255);
-      text("YELLOW", width/2 - 43, height/2 - 40);
-      if (win.duration() == win.time()) {
-        win.stop();
-        gameState = 3;
+
+    //yellow
+    if (p.currentBlock.num == 14) {
+      if (p.name == "A") {
+        last2StepA[0] = p.currentBlock.num;
+        last2StepA[1] = p.currentBlock.num;
+      } else {
+        last2StepB[0] = p.currentBlock.num;
+        last2StepB[1] = p.currentBlock.num;
+      }
+    }
+
+    //final
+    if (p.name == "A") {
+      if (p.currentBlock.num == 19) {
+        last2StepA[0] = p.currentBlock.num;
+        last2StepA[1] = p.currentBlock.num;
+      }
+    } else {
+      if (p.currentBlock.num == 19) {
+        last2StepB[0] = p.currentBlock.num;
+        last2StepB[1] = p.currentBlock.num;
+      }
+    }
+
+    //stair
+    if (p.name == "A") {
+      if ((p.currentBlock.num == 5 || p.currentBlock.num == 7 || p.currentBlock.num == 8 || p.currentBlock.num == 10) && p.gameDimen == 2) {
+        last2StepA[0] = p.currentBlock.num;
+        last2StepA[1] = p.currentBlock.num;
+      }
+    } else {
+      if ((p.currentBlock.num == 5 || p.currentBlock.num == 7 || p.currentBlock.num == 8 || p.currentBlock.num == 10) && p.gameDimen == 2) {
+        last2StepB[0] = p.currentBlock.num;
+        last2StepB[1] = p.currentBlock.num;
+      }
+    }
+
+    //normal but limit
+    if (p.currentBlock.num == 33 || p.currentBlock.num == 35 || p.currentBlock.num == 100 || p.currentBlock.num == 98) {
+      if (p.name == "A") {
+        last2StepA[0] = p.currentBlock.num;
+        last2StepA[1] = p.currentBlock.num;
+      } else {
+        last2StepB[0] = p.currentBlock.num;
+        last2StepB[1] = p.currentBlock.num;
+      }
+    }
+
+    //normal but 3D limit
+    if ((p.currentBlock.num == 51 || p.currentBlock.num == 116 || p.currentBlock.num == 108) && p.gameDimen == 3) {
+      if (p.name == "A") {
+        last2StepA[0] = p.currentBlock.num;
+        last2StepA[1] = p.currentBlock.num;
+      } else {
+        last2StepB[0] = p.currentBlock.num;
+        last2StepB[1] = p.currentBlock.num;
       }
     }
   }
