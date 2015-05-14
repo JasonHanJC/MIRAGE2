@@ -12,7 +12,7 @@ void pieceDisplay() {
     if (playerA.gameDimen == 2) {
       image(pieceR, playerA.currentBlock.center.x, playerA.currentBlock.center.y-25, 35, 50);
     } else {
-      image(pieceR3d, playerA.currentBlock.center.x, playerA.currentBlock.center.y-25, 50, 50);
+      image(pieceR3d, playerA.currentBlock.center.x, playerA.currentBlock.center.y-25, 50, 55);
     }
     //rspin.stop();
   }
@@ -30,7 +30,7 @@ void pieceDisplay() {
     if (playerB.gameDimen == 2) {
       image(pieceY, playerB.currentBlock.center.x, playerB.currentBlock.center.y-25, 35, 50);
     } else {
-      image(pieceY3d, playerB.currentBlock.center.x, playerB.currentBlock.center.y-25, 50, 50);
+      image(pieceY3d, playerB.currentBlock.center.x, playerB.currentBlock.center.y-25, 50, 55);
     }
     //yspin.stop();
   }
