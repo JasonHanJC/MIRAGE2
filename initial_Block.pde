@@ -1603,7 +1603,7 @@ void initialBlock() {
     blockLib.add(b90);
 
     b91 = new Block(91, "normal", new PVector(1051, 256), new int[] {
-      -1, 69, 92, 90
+      -1, 69, -1, 90
     }
     , new int[] {
       92, 89, -1, -1
