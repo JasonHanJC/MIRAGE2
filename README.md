@@ -1,5 +1,6 @@
 # MIRAGE 
 ######PureDigital Version
+![Mirage](https://github.com/JasonHan1990/MIRAGE2/blob/master/data/face.jpg)
 
 Mirage is a maze game that played with different dimensions and perspectives. 
 The most significant rule and idea of this game-like experience is the different dimensional views. In order to win, players need to use dimension as a tool to switch between 2D and 3D so that they are able to pass through the complicated maze map.
