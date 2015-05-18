@@ -33,7 +33,7 @@ void playerMove(Player p) {
   if (diceThrowed == false && stopMove == false && mirageChange == false) {
     image(keyDice, width/2, height/2, 300, 300);
     keyDice.play();
-    if (keyDice.currentFrame() == 23) {
+    if (keyDice.currentFrame() == 47) {
       keyDice.stop();
     }
     throwDice();
@@ -170,7 +170,7 @@ void playerMove(Player p) {
         image(LMRwin, width/2, height/2, width, height);    
         if (LMRwin.duration() == LMRwin.time()) {
           LMRwin.stop();
-          //gameState = 7;
+          gameState = 8;
         }
       }
     }
@@ -190,7 +190,7 @@ void playerMove(Player p) {
         image(LMYwin, width/2, height/2, width, height);    
         if (LMYwin.duration() == LMYwin.time()) {
           LMYwin.stop();
-          //gameState = 7;
+          gameState = 8;
         }
       }
     }

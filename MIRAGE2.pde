@@ -2,7 +2,6 @@
 import processing.video.*;
 import gifAnimation.*;
 
-int savedTime;
 int gameState = 10;
 int chooseStage = 0;
 boolean choosedStage = false;
@@ -64,13 +63,9 @@ Player playerB;
 void setup() {
   size(1440, 900);
   frameRate(60);
-
   initialInterface();
-
   background(0);
-
   imageMode(CENTER);
-
   playerAChoose = true;
   playerBChoose = false;
   playerADimen = 0;
@@ -80,7 +75,6 @@ void setup() {
   diceThrowed = false;
   whichDice = 7;
   steps = 0;
-
   doorTime = 0;
   tempDtime = 0;
   doorChooseNo = 0;
@@ -88,15 +82,11 @@ void setup() {
   doorChanged = false;
   nowAtDoor = false;
   sameDoor = false;
-
   stairErr = false;
-
   stopMove = false;
   diceSize = 300;
-
   blockInitial = 1;
   initialBlock();
-
   playerA = new Player("A", false, 3, b7);
   playerB = new Player("B", true, 2, b0);
   last2StepA = new int[] {
@@ -105,6 +95,7 @@ void setup() {
   last2StepB = new int[] {
     0, 0
   };
+  gameState = 0;
 }
 
 void movieEvent(Movie m) {
@@ -115,8 +106,8 @@ void draw() {
   //println("gameState " + gameState);
 
   //println("A : " + last2StepA[0] + " " + last2StepA[1] + "  B : " + last2StepB[0] + " " + last2StepB[1]);
-  if (keyPressed == true && (key == 'p' || key == 'P'))
-    gameState = 0;
+  //if (keyPressed == true && (key == 'p' || key == 'P'))
+  //gameState = 0;
 
   /******************    State 0 Intro    ******************/
   if (gameState == 0) {                        //startvideo
@@ -249,7 +240,7 @@ void draw() {
 
       if (playerA.gameDimen != 0 && playerB.gameDimen != 0 && EnterCount == 2 ) {
         //delay(2000);
-        mirageLevel = null;
+        //mirageLevel = null;
         gameState = 3; // level Mirage
       }
     } else {
@@ -412,10 +403,10 @@ void draw() {
       menuChoose.play();
       break;
     }
-    textFont(oswald);
-    textSize(20);
-    fill(255, 239, 0);
-    text("Press UP and DOWN Then Hit ENTER", width/2-140, 790);
+    //    textFont(oswald);
+    //    textSize(20);
+    //    fill(255, 239, 0);
+    //    text("Press UP and DOWN Then Hit ENTER", width/2-140, 790);
     if (choosedStage == true) {
       switch(chooseStage) {
       case 0:
@@ -427,6 +418,8 @@ void draw() {
           //          System.gc();
           gameState = 4;
         }
+        chooseStage = 0;
+        choosedStage = false;
         break;
       case 1:
         blockLib.clear();
@@ -443,6 +436,8 @@ void draw() {
         last2StepB = new int[] {
           9, 9
         };
+        chooseStage = 0;
+        choosedStage = false;
         gameState = 1;  //go to Dimen choose
         break;
       case 2:
@@ -463,6 +458,8 @@ void draw() {
         last2StepB = new int[] {
           17, 17
         };
+        chooseStage = 0;
+        choosedStage = false;
         gameState = 6;
         break;
       }
