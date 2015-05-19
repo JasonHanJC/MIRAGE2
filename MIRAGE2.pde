@@ -417,9 +417,10 @@ void draw() {
           //          cleanTitleM();
           //          System.gc();
           gameState = 4;
+          chooseStage = 0;
+          choosedStage = false;
         }
-        chooseStage = 0;
-        choosedStage = false;
+
         break;
       case 1:
         blockLib.clear();
