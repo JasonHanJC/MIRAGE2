@@ -170,6 +170,11 @@ void playerMove(Player p) {
         image(LMRwin, width/2, height/2, width, height);    
         if (LMRwin.duration() == LMRwin.time()) {
           LMRwin.stop();
+          mirageLevel.stop();
+          turnCount = 0;
+          enterCount = 0;
+          playerADimen = 0;
+          playerBDimen = 0;
           gameState = 8;
         }
       }
@@ -190,6 +195,11 @@ void playerMove(Player p) {
         image(LMYwin, width/2, height/2, width, height);    
         if (LMYwin.duration() == LMYwin.time()) {
           LMYwin.stop();
+          mirageLevel.stop();
+          turnCount = 0;
+          enterCount = 0;
+          playerADimen = 0;
+          playerBDimen = 0;
           gameState = 8;
         }
       }
