@@ -5,7 +5,7 @@
 Mirage is a maze game that played with different dimensions and perspectives. 
 The most significant rule and idea of this game-like experience is the different dimensional views. In order to win, players need to use dimension as a tool to switch between 2D and 3D so that they are able to pass through the complicated maze map.
 
-The game is programmed with processing.
+The game is programmed with processing. You can download the exported game here: [Mac OS](https://www.dropbox.com/sh/arhbn8ly3i9ij7y/AAD17En91GlCJnHLziQe7xy2a?oref=e&n=249993972)
 
 
 ###Description
