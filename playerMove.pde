@@ -172,7 +172,7 @@ void playerMove(Player p) {
           LMRwin.stop();
           mirageLevel.stop();
           turnCount = 0;
-          enterCount = 0;
+          EnterCount = 0;
           playerADimen = 0;
           playerBDimen = 0;
           gameState = 8;
@@ -197,7 +197,7 @@ void playerMove(Player p) {
           LMYwin.stop();
           mirageLevel.stop();
           turnCount = 0;
-          enterCount = 0;
+          EnterCount = 0;
           playerADimen = 0;
           playerBDimen = 0;
           gameState = 8;
