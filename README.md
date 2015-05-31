@@ -20,3 +20,5 @@ Game Screenshot:
 
 ### Author
 [Kefang Ning](https://www.linkedin.com/pub/kefang-ning/64/214/805?domainCountryName=&csrfToken=ajax%3A7453820024638581940) & [Juncheng Han](https://www.linkedin.com/in/junchenghan)
+
+See Kefang's Portfolio about [Mirage](http://kefang-ning.com/Mirage)
