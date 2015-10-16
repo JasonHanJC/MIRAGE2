@@ -1,5 +1,5 @@
 class drawDoor {
-  int[] doorVertex;
+  private int[] doorVertex;
 
   drawDoor(int[] dv) {
     this.doorVertex = dv;

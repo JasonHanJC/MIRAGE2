@@ -1,8 +1,8 @@
 class Player {
-  String name;
-  boolean myTurn;
-  int gameDimen;
-  Block currentBlock;
+  private String name;
+  private boolean myTurn;
+  private int gameDimen;
+  private Block currentBlock;
 
   Player(String name, boolean myTurn, int gameDimen, Block currentBlock) {
     this.name = name;

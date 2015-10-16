@@ -1,14 +1,14 @@
 public class Block {
   //every block has its own name
-  int num;
+  private int num;
   //the center location of the block, use to loc the pieces
-  PVector center;
+  private PVector center;
   //store the block adjacent to the current block by num, and some blocks have no aviBloc2d
   //and in the array the [up, down, left, right], 0 means null block
-  int[] aviBloc2d;
-  int[] aviBloc3d;
+  private int[] aviBloc2d;
+  private int[] aviBloc3d;
   //normal, yellow, door, stair
-  String name;
+  private String name;
 
   Block(int num, String name, PVector c, int[] a, int[] b) {
     this.num = num;
